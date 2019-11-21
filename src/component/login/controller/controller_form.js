@@ -28,12 +28,18 @@ class formValidation {
     }
 
     checkLogin(credentials){
-       if (!credentials.username || !credentials.password){
-        this.validated = {
-            username: true,
-            password: true
-        }
-       }
+      if (!credentials.username){
+          this.validated = {
+              ...this.validated,
+              username: true
+          }
+      }
+      if (!credentials.password){
+          this.validated = {
+              ...this.validated,
+              password: true
+          }
+      }
     }
 
     isValidated(){

@@ -26,8 +26,6 @@ const FormInput = ({Tname, Tlabel, Ttype, loginFn, err}) => {
 
  return(
   <TextField
-    // required
-    // InputLabelProps={{ required: false }} 
     name={Tname}
     label={Tlabel}
     variant="outlined"
@@ -55,6 +53,7 @@ FormInput.propTypes = {
 export default function LoginForm({loginFn, submitFn}){
   const [update, setUpdate] = React.useState(true)
   const [check, setCheck] = React.useState(validate.isValidated())
+  
   React.useEffect(() => {
     setCheck(validate.isValidated())
   }, [update])
@@ -74,10 +73,10 @@ export default function LoginForm({loginFn, submitFn}){
       }}
     > 
       <FormInput
-	      Tname={"username"}
-        Tlabel={"Username"}
+	      Tname={"email"}
+        Tlabel={"Email"}
         loginFn={loginFn}
-        err={check.username}
+        err={check.email}
       />
       <FormInput 
 	      Tname={"password"}
