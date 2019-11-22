@@ -1,7 +1,7 @@
 class formValidation {
     constructor(){
         this.validated = {
-            username: false,
+            email: false,
             password: false
         }
     }

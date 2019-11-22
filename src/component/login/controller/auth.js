@@ -12,9 +12,19 @@ class api {
                 email: loginData.email,
                 password: loginData.password
             })
-            return response
+            const data = {
+                ...response,
+                notif: {msg: 'Login succesfully',
+                variant: 'success'}
+            }
+            return data
         }catch(err){
-            return 'Invalid username and password !! '
+            const data = {
+                notif: {msg: 'Invalid username and password',
+                variant: 'error'}
+            }
+
+            return data
         }
     }
 

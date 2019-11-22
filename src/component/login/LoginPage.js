@@ -2,7 +2,6 @@ import React from 'react'
 import { Paper, Container } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import { useSnackbar } from 'notistack'
-
 import validate from 'component/login/controller/controller_form'
 import auth from 'component/login/controller/auth'
 import LoginForm from 'component/login/Form'
@@ -24,14 +23,16 @@ const useStyles = makeStyles(theme=>({
 }))
 
 export default function LoginPage() {
-    const { enqueueSnackbar } = useSnackbar();
-
     const [credentials, setCredentials] = React.useState({
 	email: '',
 	password: '',
 	})
-	
-
+    
+    const { enqueueSnackbar } = useSnackbar();
+    
+    const notify = variant => {
+        enqueueSnackbar(variant.msg, {...variant, autoHideDuration: 3000})
+    }
     const handleInput = (e) => {
         var state = {
         value: e.target.value,
@@ -45,6 +46,10 @@ export default function LoginPage() {
         if (!credentials.username || !credentials.password){
             validate.checkLogin(credentials)
         }
+        auth.login(credentials)
+        .then(response => {
+            notify(response.notif)
+        })
     }
 
     const classes = useStyles()
