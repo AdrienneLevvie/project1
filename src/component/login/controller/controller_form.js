@@ -31,7 +31,7 @@ class formValidation {
       if (!credentials.username){
           this.validated = {
               ...this.validated,
-              username: true
+              email: true
           }
       }
       if (!credentials.password){
@@ -40,6 +40,7 @@ class formValidation {
               password: true
           }
       }
+      return
     }
 
     isValidated(){
