@@ -28,7 +28,7 @@ class formValidation {
     }
 
     checkLogin(credentials){
-      if (!credentials.username){
+      if (!credentials.email){
           this.validated = {
               ...this.validated,
               email: true
