@@ -7,6 +7,9 @@ import auth from 'component/login/controller/auth'
 import LoginForm from 'component/login/Form'
 import avatar from '../../icons/doctor-svgrepo-com.svg'
 
+import { useSelector, useDispatch } from 'react-redux'
+import { sign_in } from 'redx/actions'
+
 const useStyles = makeStyles(theme=>({
     mainContainer: {
         backgroundColor: 'transparent',
@@ -27,7 +30,7 @@ export default function LoginPage() {
 	email: '',
 	password: '',
 	})
-    
+    const dispatch = useDispatch()
     const { enqueueSnackbar } = useSnackbar();
     
     const notify = variant => {
@@ -49,7 +52,8 @@ export default function LoginPage() {
         auth.login(credentials)
         .then(response => {
             notify(response.notif)
-        })
+           
+        }).then(()=>dispatch(sign_in()))
     }
 
     const classes = useStyles()

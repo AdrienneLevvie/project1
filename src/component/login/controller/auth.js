@@ -35,11 +35,13 @@ class auth {
     constructor(){
         this.api = new api()
         this.authenticated = false
+        this.curr_user = []
     }
 
     async login(credentials){
         const result = await this.api.loginController(credentials, 'login');
-        return result
+        this.curr_user = result
+        return this.curr_user
     }
 
     isAuth(){

@@ -15,7 +15,6 @@ const useStyles = makeStyles(theme => ({
  }
 }))
 
-
 const FormInput = ({Tname, Tlabel, Ttype, loginFn, err}) => {
   const [error, setErr] = React.useState(err)
   const classes = useStyles()
@@ -51,9 +50,23 @@ FormInput.propTypes = {
 
 
 export default function LoginForm({loginFn, submitFn}){
+
   const [update, setUpdate] = React.useState(true)
   const [check, setCheck] = React.useState(validate.isValidated())
-  
+
+  const textInput = [{
+    "Tname":"email",
+    "Tlabel":"Email",
+    "loginFn":loginFn,
+    "err":check.email
+  },{
+    "Tname":"password",
+    "Tlabel":"Password",
+    "Ttype":"password",
+    "loginFn":loginFn,
+    "err":check.password
+  }]
+
   React.useEffect(() => {
     setCheck(validate.isValidated())
   }, [update])
@@ -72,19 +85,18 @@ export default function LoginForm({loginFn, submitFn}){
         padding: '25px',
       }}
     > 
-      <FormInput
-	      Tname={"email"}
-        Tlabel={"Email"}
-        loginFn={loginFn}
-        err={check.email}
-      />
-      <FormInput 
-	      Tname={"password"}
-        Tlabel={"Password"}
-	      Ttype={"password"}
-        loginFn={loginFn}
-        err={check.password}
-      />
+    {
+      textInput.map((props,i) => (
+        <FormInput
+          key={i}
+          Tname={props.Tname}
+          Tlabel={props.Tlabel}
+          Ttype={props.Ttype}
+          loginFn={props.loginFn}
+          err={props.err}
+        />
+      ))
+    }
       <Button 
         color="primary" 
         variant="contained"  
@@ -94,6 +106,5 @@ export default function LoginForm({loginFn, submitFn}){
         Submit
       </Button>	
   </form>
-   
     )
 }
