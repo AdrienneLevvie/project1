@@ -7,7 +7,7 @@ import auth from 'component/login/controller/auth'
 import LoginForm from 'component/login/Form'
 import avatar from '../../icons/doctor-svgrepo-com.svg'
 
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { sign_in } from 'redx/actions'
 
 const useStyles = makeStyles(theme=>({
@@ -25,7 +25,7 @@ const useStyles = makeStyles(theme=>({
     }
 }))
 
-export default function LoginPage() {
+export default function LoginPage(props) {
     const [credentials, setCredentials] = React.useState({
 	email: '',
 	password: '',
@@ -52,8 +52,8 @@ export default function LoginPage() {
         auth.login(credentials)
         .then(response => {
             notify(response.notif)
-           
         }).then(()=>dispatch(sign_in()))
+        .then(()=>props.history.push('/home'))
     }
 
     const classes = useStyles()

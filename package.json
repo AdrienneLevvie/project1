@@ -8,6 +8,7 @@
     "axios": "^0.19.0",
     "clsx": "^1.0.4",
     "create-redux": "0.0.4",
+    "local-storage": "^2.0.0",
     "notistack": "^0.9.6",
     "prop-types": "^15.7.2",
     "react": "^16.11.0",

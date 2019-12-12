@@ -1,5 +1,6 @@
-import sign_in from './user_data'
+import {sign_in, log_out} from './user_data'
 
 export  {
-    sign_in
+    sign_in, 
+    log_out
 }

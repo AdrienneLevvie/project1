@@ -1,13 +1,11 @@
 import React from 'react';
-//import NavBar from 'component/header/NavBar';
-import LoginPage from 'component/login/LoginPage'
-
 import 'App.css';
+import PageRouter from 'Router'
 
 function App() {
   return (
     <div className="App">
-      <LoginPage />
+      <PageRouter />
     </div>
   );
 }
