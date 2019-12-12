@@ -4,7 +4,7 @@ import { Button } from '@material-ui/core';
 function NavBar() {
     return (
         <AppBar position="fixed">
-
+            
         </AppBar>
     )
 }
