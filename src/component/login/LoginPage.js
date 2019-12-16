@@ -6,7 +6,7 @@ import validate from 'component/login/controller/controller_form'
 import auth from 'component/login/controller/auth'
 import LoginForm from 'component/login/Form'
 import avatar from '../../icons/doctor-svgrepo-com.svg'
-
+//import { useForm } from './controller/useForm'
 import { useDispatch } from 'react-redux'
 import { sign_in } from 'redx/actions'
 
@@ -25,23 +25,38 @@ const useStyles = makeStyles(theme=>({
     }
 }))
 
+
+
+const initialCredentials = {
+    email:'', 
+    password:''
+}
+
+function loginReducer(state, {action, field, value}){
+    switch(action){
+    case 'handleInput':
+        return {
+            ...state,
+            [field]:value
+        }
+    default:
+        return 'hi'
+    }
+
+}
+
 export default function LoginPage(props) {
-    const [credentials, setCredentials] = React.useState({
-	email: '',
-	password: '',
-	})
+
+    const [credentials, setCredentials] = React.useReducer(loginReducer, initialCredentials)
     const dispatch = useDispatch()
     const { enqueueSnackbar } = useSnackbar();
     
     const notify = variant => {
         enqueueSnackbar(variant.msg, {...variant, autoHideDuration: 3000})
     }
+
     const handleInput = (e) => {
-        var state = {
-        value: e.target.value,
-        target: e.target.name
-            }
-        setCredentials({...credentials,[state.target]:state.value})
+        setCredentials({action: 'handleInput', field: e.target.name, value: e.target.value})
     }
 
     const handleSubmit = (e) => {
@@ -52,8 +67,11 @@ export default function LoginPage(props) {
         auth.login(credentials)
         .then(response => {
             notify(response.notif)
-        }).then(()=>dispatch(sign_in()))
-        .then(()=>props.history.push('/home'))
+            if (!response.err){
+                dispatch(sign_in())
+                props.history.push('/home')
+            }
+        })
     }
 
     const classes = useStyles()

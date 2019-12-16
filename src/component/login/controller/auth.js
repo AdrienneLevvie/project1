@@ -20,6 +20,7 @@ class api {
             return data
         }catch(err){
             const data = {
+                err: err,
                 notif: {msg: 'Invalid username and password',
                 variant: 'error'}
             }
