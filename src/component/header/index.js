@@ -14,17 +14,26 @@ const useStyle = makeStyles(themee => ({
     }
 }))
 
+
+
+
+function navBarReducer(state, {action, anchor}){
+    switch(action){
+        case 'handleMenu':
+            return {anchorEl: anchor}
+        case 'handleClose':
+            return {anchorEl: null}
+        default:
+            return state
+    }
+}
+
+
 export default ({msg, user}) => {
     const classes = useStyle()
-    const [anchorEl, setAnchorEl] = React.useState(null);
-    const open = Boolean(anchorEl);
-    const handleMenu = event => {
-      setAnchorEl(event.currentTarget);
-    };
-    const handleClose = () => {
-      setAnchorEl(null);
-    };
-  
+    const [state, dispatch] = React.useReducer(navBarReducer, {anchorEl:null})
+    const open = Boolean(state.anchorEl);
+
     return (
         <AppBar position="static" className={classes.root}>
             <Toolbar variant="dense">
@@ -38,13 +47,13 @@ export default ({msg, user}) => {
                     aria-label="account of current user"
                     aria-controls="menu-appbar"
                     aria-haspopup="true"
-                    onClick={handleMenu}
+                    onClick={(e)=>(dispatch({action: 'handleMenu', anchor: e.currentTarget}))}
                     color="inherit"
                 >
                     <AccountCircle/>
                 </IconButton>
                 <Menu
-                    anchorEl={anchorEl}
+                    anchorEl={state.anchorEl}
                     anchorOrigin={{
                       vertical: 'top',
                       horizontal: 'right',
@@ -55,7 +64,7 @@ export default ({msg, user}) => {
                       horizontal: 'right',
                     }}
                     open={open}
-                    onClose={handleClose}
+                    onClose={()=>dispatch({action:'handleClose'})}
                 >
                     <MenuItem>View Profile</MenuItem>
                     <MenuItem>Logout</MenuItem>

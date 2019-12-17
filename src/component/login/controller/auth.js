@@ -44,7 +44,7 @@ class auth {
         this.curr_user = result
         return this.curr_user
     }
-
+    
     isAuth(){
         return this.authenticated
     }
