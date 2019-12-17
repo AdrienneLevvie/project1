@@ -3,12 +3,10 @@ import { Paper, Container } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import { useSnackbar } from 'notistack'
 import validate from 'component/login/controller/controller_form'
-import auth from 'component/login/controller/auth'
+import auth from 'controllers/login/auth'
 import LoginForm from 'component/login/Form'
 import avatar from '../../icons/doctor-svgrepo-com.svg'
-//import { useForm } from './controller/useForm'
-import { useDispatch } from 'react-redux'
-import { sign_in } from 'redx/actions'
+import { Redirect } from '@reach/router'
 
 const useStyles = makeStyles(theme=>({
     mainContainer: {
@@ -40,39 +38,31 @@ function loginReducer(state, {action, field, value}){
             [field]:value
         }
     default:
-        return 'hi'
+        return state
     }
-
 }
 
 export default function LoginPage(props) {
-
-    const [credentials, setCredentials] = React.useReducer(loginReducer, initialCredentials)
-    const dispatch = useDispatch()
     const { enqueueSnackbar } = useSnackbar();
+    const [credentials, setCredentials] = React.useReducer(loginReducer, initialCredentials)
     
     const notify = variant => {
         enqueueSnackbar(variant.msg, {...variant, autoHideDuration: 3000})
     }
-
     const handleInput = (e) => {
         setCredentials({action: 'handleInput', field: e.target.name, value: e.target.value})
     }
-
-    const handleSubmit = (e) => {
+    const handleSubmit = async(e) => {
         e.preventDefault();
-        if (!credentials.username || !credentials.password){
-            validate.checkLogin(credentials)
-        }
-        auth.login(credentials)
-        .then(response => {
-            notify(response.notif)
-            if (!response.err){
-                dispatch(sign_in())
-                props.history.push('/home')
-            }
-        })
+        !(credentials.username || !credentials.password) && validate.checkLogin(credentials)
+        const response = await auth.login(credentials)
+        notify(response.notif)
+        !response.err && props.history.push('/home')
     }
+    
+    React.useEffect(()=>{
+        auth.isAuth() && props.history.push('/home')
+    },[])
 
     const classes = useStyles()
     return (
