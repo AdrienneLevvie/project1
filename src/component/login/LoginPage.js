@@ -6,7 +6,6 @@ import validate from 'component/login/controller/controller_form'
 import auth from 'controllers/login/auth'
 import LoginForm from 'component/login/Form'
 import avatar from '../../icons/doctor-svgrepo-com.svg'
-import { Redirect } from '@reach/router'
 
 const useStyles = makeStyles(theme=>({
     mainContainer: {
@@ -62,7 +61,7 @@ export default function LoginPage(props) {
     
     React.useEffect(()=>{
         auth.isAuth() && props.history.push('/home')
-    },[])
+    },[props.history])
 
     const classes = useStyles()
     return (

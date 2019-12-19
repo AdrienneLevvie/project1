@@ -9,6 +9,7 @@ export default () => (
     <Switch>
         <Route exact path="/" component={LoginPage} />
         <ProtectedRoutes path="/home" component={HomePage} />
+        <Route path="*" component={() => "404 Not Found"} />
     </Switch>
 )
 

@@ -39,6 +39,10 @@ class auth {
         this.curr_user = []
     }
 
+    clearup(){
+        console.clear()
+    }
+
     async login(credentials){
         const result = await this.api.loginController(credentials, 'login');
         this.curr_user = result
@@ -47,6 +51,11 @@ class auth {
         }
         ls.set('user', JSON.stringify(this.curr_user))
         return this.curr_user
+    }
+
+    logout(){
+        ls.clear()
+        return {msg: `Goodbye `, variant: 'success'}
     }
     
     isAuth(){

@@ -3,6 +3,9 @@ import { AppBar, IconButton, Toolbar, Typography, Menu, MenuItem } from '@materi
 import MenuIcon from '@material-ui/icons/Menu'
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import { makeStyles } from '@material-ui/core/styles'
+import { useSnackbar } from 'notistack'
+import { withRouter } from 'react-router-dom'
+import auth from 'controllers/login/auth'
 
 const useStyle = makeStyles(themee => ({
     root: {
@@ -29,10 +32,18 @@ function navBarReducer(state, {action, anchor}){
 }
 
 
-export default ({msg, user}) => {
+export default withRouter((props) => {
     const classes = useStyle()
+    const { enqueueSnackbar } = useSnackbar();
     const [state, dispatch] = React.useReducer(navBarReducer, {anchorEl:null})
     const open = Boolean(state.anchorEl);
+
+    const handleLogout = async() => {
+        const result = await auth.logout()
+        enqueueSnackbar(result.msg, {...result, autoHideDuration: 3000})
+        props.history.push('/')
+    }
+    
 
     return (
         <AppBar position="static" className={classes.root}>
@@ -41,7 +52,6 @@ export default ({msg, user}) => {
                     <MenuIcon />
                 </IconButton>
                 <Typography className={classes.title} variant="h6" color="inherit">
-                    {msg}
                 </Typography>
                 <IconButton 
                     aria-label="account of current user"
@@ -67,9 +77,9 @@ export default ({msg, user}) => {
                     onClose={()=>dispatch({action:'handleClose'})}
                 >
                     <MenuItem>View Profile</MenuItem>
-                    <MenuItem>Logout</MenuItem>
+                    <MenuItem onClick={handleLogout}>Logout</MenuItem>
                 </Menu>
             </Toolbar>
         </AppBar>
     )
-}
+})
