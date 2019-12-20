@@ -6,6 +6,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import { useSnackbar } from 'notistack'
 import { withRouter } from 'react-router-dom'
 import auth from 'controllers/login/auth'
+import { DrawerComponent } from './sidebar ';
 
 const useStyle = makeStyles(themee => ({
     root: {
@@ -16,9 +17,6 @@ const useStyle = makeStyles(themee => ({
         flexGrow: 1
     }
 }))
-
-
-
 
 function navBarReducer(state, {action, anchor}){
     switch(action){
@@ -43,12 +41,23 @@ export default withRouter((props) => {
         enqueueSnackbar(result.msg, {...result, autoHideDuration: 3000})
         props.history.push('/')
     }
+
+    const [drawerOpen, setOpen] = React.useState(false)
+
+    const handleDrawerOpen = () => {
+        setOpen(true);
+    };
+
+    const handleDrawerClose = () => {
+        setOpen(false);
+    };
     
 
     return (
+    <div style={{display: 'flex'}}>
         <AppBar position="static" className={classes.root}>
             <Toolbar variant="dense">
-                <IconButton edge="start" aria-label="menu">
+                <IconButton edge="start" aria-label="menu" onClick={handleDrawerOpen}>
                     <MenuIcon />
                 </IconButton>
                 <Typography className={classes.title} variant="h6" color="inherit">
@@ -81,5 +90,7 @@ export default withRouter((props) => {
                 </Menu>
             </Toolbar>
         </AppBar>
+        <DrawerComponent handleDrawerClose={handleDrawerClose} open={drawerOpen} />
+    </div>
     )
 })
