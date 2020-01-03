@@ -14,6 +14,7 @@ import { Typography } from '@material-ui/core';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import GroupIcon from '@material-ui/icons/Group';
+import AddPatient from './AddPatient';
 
 
 const drawerWidth = 240;
@@ -73,17 +74,48 @@ const useStyles = makeStyles(theme => ({
     },
   }));
 
+const dialogState = {'New Record': false, 'New Add': false}
+function reducer(state, action){
+    switch(action.type){
+      case 'OPEN':
+        return {...state, [`${action.modal}`]: true}
+      case 'CLOSE':
+        return {...state,[`${action.modal}`]: false}
+      default:
+        return state
+    }
+}
+
+function componentReducer(state, action){
+  switch(action.type){
+    case 'New Record':
+      return <AddPatient title={action.title} isOpen={action.isOpen} handleClose={action.handleClose}/>
+    default:
+      return <AddPatient title={action.title} isOpen={action.isOpen} handleClose={action.handleClose}/>
+  }
+}
+
+
 
 export default ({handleDrawerClose, open}) => {
     const classes = useStyles();   
     const theme = useTheme();
+ 
+    const [show, dispatch] = React.useReducer(reducer, dialogState)
+
+    function handleClose(name){
+      dispatch({type: 'CLOSE', modal: [`${name}`]})
+    }
+    function handleOpen(name){
+      dispatch({type: 'OPEN', modal:[`${name}`]})
+    }
 
     return (
       <React.Fragment>
             <CssBaseline />
             <Drawer 
                 className={classes.drawer}
-                variant="persistennt"
+                variant="persistent"
                 anchor="left"
                 open={open}
                 classes={{
@@ -98,8 +130,8 @@ export default ({handleDrawerClose, open}) => {
               </div>
                 <Divider />
                 <List>
-                  {['Dashboard','Patients'].map((text, index) => (
-                    <ListItem button key={text}>
+                  {['Home','Patients'].map((text, index) => (
+                    <ListItem button key={index}>
                       <ListItemIcon>{index % 2 === 0 ? <DashboardIcon /> : <GroupIcon />}</ListItemIcon>
                       <ListItemText primary={text} />
                     </ListItem>
@@ -107,16 +139,35 @@ export default ({handleDrawerClose, open}) => {
                 </List>
                 <Divider />
                 <List>
-                  {['New Record'].map((text) => (
-                    <ListItem button key={text}>
+                  {['New Record', 'New Add'].map((text, index) => (
+                    <React.Fragment key={index}>
+                    <ListItem button  onClick={() => handleOpen(text)}>
                       <ListItemIcon>
                         <AddCircleOutlineIcon />
                       </ListItemIcon>
                       <ListItemText primary={text} />
                     </ListItem>
+                    {
+                      <PrototypeComponent 
+                        
+                      />
+                    }  
+                    </React.Fragment>
                   ))}
                 </List>
             </Drawer>
-            </React.Fragment>
+      </React.Fragment>
     )
+}
+
+function PrototypeComponent(props){
+  const [component, pickComponent] = React.useReducer(componentReducer, {})
+  const thisModal = (modal) => {
+    return pickComponent({type:'NEW_RECORD',title: [`${modal.title}`], isOpen: [`${modal.bool}`], handleClose: [`${modal.callback}`] })
+  }
+  return (
+    <div>
+
+    </div>
+  )
 }
