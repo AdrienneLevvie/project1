@@ -31,7 +31,7 @@ export default (props) => {
                 <CloseIcon />
                 </IconButton>
                 <Typography variant="h6" className={classes.title}>
-                {title}+
+                {title}
                 </Typography>
                 <Button autoFocus color="inherit" onClick={handleClose}>
                 save

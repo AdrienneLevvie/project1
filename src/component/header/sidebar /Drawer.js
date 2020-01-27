@@ -45,6 +45,7 @@ const useStyles = makeStyles(theme => ({
     drawer: {
       width: drawerWidth,
       flexShrink: 0,
+      position: "absolute"
     },
     drawerPaper: {
       width: drawerWidth,
@@ -74,7 +75,7 @@ const useStyles = makeStyles(theme => ({
     },
   }));
 
-const dialogState = {'New Record': false, 'New Add': false}
+const dialogState = {'New Patient': false}
 function reducer(state, action){
     switch(action.type){
       case 'OPEN':
@@ -86,27 +87,17 @@ function reducer(state, action){
     }
 }
 
-function componentReducer(state, action){
-  switch(action.type){
-    case 'New Record':
-      return <AddPatient title={action.title} isOpen={action.isOpen} handleClose={action.handleClose}/>
-    default:
-      return <AddPatient title={action.title} isOpen={action.isOpen} handleClose={action.handleClose}/>
-  }
-}
-
-
-
 export default ({handleDrawerClose, open}) => {
     const classes = useStyles();   
     const theme = useTheme();
  
     const [show, dispatch] = React.useReducer(reducer, dialogState)
-
-    function handleClose(name){
+    function handleClose(event, name){
+      event.stopPropagation()
       dispatch({type: 'CLOSE', modal: [`${name}`]})
     }
-    function handleOpen(name){
+    function handleOpen(event, name){
+      event.stopPropagation()
       dispatch({type: 'OPEN', modal:[`${name}`]})
     }
 
@@ -139,35 +130,18 @@ export default ({handleDrawerClose, open}) => {
                 </List>
                 <Divider />
                 <List>
-                  {['New Record', 'New Add'].map((text, index) => (
-                    <React.Fragment key={index}>
-                    <ListItem button  onClick={() => handleOpen(text)}>
+                  {['New Patient'].map((text, index) => (
+                    <ListItem key={index} button onClick={(event) => handleOpen(event, text)}>
                       <ListItemIcon>
                         <AddCircleOutlineIcon />
                       </ListItemIcon>
                       <ListItemText primary={text} />
+                   
+                      <AddPatient title={text} isOpen={show[text]} handleClose={(event) => handleClose(event, text)} />
                     </ListItem>
-                    {
-                      <PrototypeComponent 
-                        
-                      />
-                    }  
-                    </React.Fragment>
                   ))}
                 </List>
             </Drawer>
       </React.Fragment>
     )
-}
-
-function PrototypeComponent(props){
-  const [component, pickComponent] = React.useReducer(componentReducer, {})
-  const thisModal = (modal) => {
-    return pickComponent({type:'NEW_RECORD',title: [`${modal.title}`], isOpen: [`${modal.bool}`], handleClose: [`${modal.callback}`] })
-  }
-  return (
-    <div>
-
-    </div>
-  )
 }
