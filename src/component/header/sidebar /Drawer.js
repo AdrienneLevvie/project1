@@ -15,7 +15,8 @@ import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import GroupIcon from '@material-ui/icons/Group';
 import AddPatient from './AddPatient';
-
+import {Link} from 'react-router-dom'
+import Linker from 'component/common-components/Linker';
 
 const drawerWidth = 240;
 const useStyles = makeStyles(theme => ({
@@ -122,10 +123,12 @@ export default ({handleDrawerClose, open}) => {
                 <Divider />
                 <List>
                   {['Home','Patients'].map((text, index) => (
+                    <Linker route={text === 'Home'?'/home': text === 'Patients'? '/patient':null}>
                     <ListItem button key={index}>
                       <ListItemIcon>{index % 2 === 0 ? <DashboardIcon /> : <GroupIcon />}</ListItemIcon>
                       <ListItemText primary={text} />
                     </ListItem>
+                    </Linker>
                   ))}
                 </List>
                 <Divider />
