@@ -2,46 +2,65 @@ import React from 'react'
 import Modal from '../../common-components/Modal'
 //import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import { TextField, Input } from '@material-ui/core';
+import { TextField, Container, makeStyles } from '@material-ui/core';
 //import DialogContentText from '@material-ui/core/DialogContentText';
+import PropTypes from 'prop-types'
 
+const fields = [
+    ["Patient's Name"], 
+    ["Sex", "Age", "Birthday"],
+    ["House No.", "Street", "City"],
+    ["Mother's Name", "Mother's Occupation"],
+    ["Father's Name", "Father's Occupation"],
+]
 
-const fields = ["Patient's Name", ["House No.", "Street", "City"], "Age"]
+const useStyle = makeStyles( theme => ({
+    InputField: {
+        margin: theme.spacing(1)
+    }
+}))
 
-const InputField = (props) => (
-    fields.map(name => {
-        
-        return typeof(name) === 'string'? (
-        <TextField 
-            key={name}
-            autoFocus
-            margin="dense"
-            label={name}
-            type="text"
-            fullWidth
-            />
-        ):(
-            name.map(groupedField => (
-                <div key={groupedField} style={{display: 'inline'}}>
-                <TextField 
-                    autoFocus
-                    margin="dense"
-                    label={groupedField}
-                    type="text"
-                    fullWidth
-                />
-                </div>
-            ))
-        )
-    })
-)
+const InputField = (props) => {
+    const classes = useStyle()
+    return (
+        <div>
+           {
+               props.fields.map( group => (
+                   <div key={group} style={{display: 'flex'}}>
+                       {group.map( name => (
+                            <TextField
+                            key={name}
+                            className={classes.InputField} 
+                            autoFocus
+                            margin="dense"
+                            label={name}
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                            type={name==='Birthday'? 'date':'text'}
+                            fullWidth
+                            variant="outlined"
+                        />
+                       ))}
+                   </div>
+               ))
+           }
+        </div>
+    )   
+}
+InputField.propTypes = {
+    fields: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string))
+}
 
 export default (props) => {
     const {isOpen, title, handleClose} = props
     return (
         <Modal title={title} open={isOpen} handleClose={handleClose}>
             <DialogContent>
-                <InputField />
+                <Container>
+                    <h1>Image Here</h1>
+                </Container>
+                <InputField fields={fields}/>
             </DialogContent>
         </Modal>
     )
