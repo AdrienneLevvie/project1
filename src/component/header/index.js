@@ -6,7 +6,8 @@ import { makeStyles } from '@material-ui/core/styles'
 import { useSnackbar } from 'notistack'
 import { withRouter } from 'react-router-dom'
 import auth from 'controllers/login/auth'
-import { DrawerComponent } from './sidebar ';
+import { DrawerComponent } from './sidebar /Sidebar';
+import { SidebarContext } from 'context/SidebarContext';
 
 const useStyle = makeStyles(themee => ({
     root: {
@@ -32,6 +33,7 @@ function navBarReducer(state, {action, anchor}){
 
 export default withRouter((props) => {
     const classes = useStyle()
+    const SidebarController = React.useContext(SidebarContext)
     const { enqueueSnackbar } = useSnackbar();
     const [state, dispatch] = React.useReducer(navBarReducer, {anchorEl:null})
     const open = Boolean(state.anchorEl);
@@ -42,14 +44,14 @@ export default withRouter((props) => {
         props.history.push('/')
     }
 
-    const [drawerOpen, setOpen] = React.useState(false)
+    const drawerOpen = SidebarController.state
 
     const handleDrawerOpen = () => {
-        setOpen(true);
+        SidebarController.option({type: 'OPEN'})
     };
 
     const handleDrawerClose = () => {
-        setOpen(false);
+        SidebarController.option({type: 'CLOSE'})
     };
     
 

@@ -6,6 +6,12 @@ import { TextField, Container, makeStyles } from '@material-ui/core';
 //import DialogContentText from '@material-ui/core/DialogContentText';
 import PropTypes from 'prop-types'
 
+
+const useStyle = makeStyles( theme => ({
+    InputField: {
+        margin: theme.spacing(1)
+    }
+}))
 const fields = [
     ["Patient's Name"], 
     ["Sex", "Age", "Birthday"],
@@ -13,13 +19,6 @@ const fields = [
     ["Mother's Name", "Mother's Occupation"],
     ["Father's Name", "Father's Occupation"],
 ]
-
-const useStyle = makeStyles( theme => ({
-    InputField: {
-        margin: theme.spacing(1)
-    }
-}))
-
 const InputField = (props) => {
     const classes = useStyle()
     return (

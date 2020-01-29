@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import {useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import List from '@material-ui/core/List';
@@ -15,66 +15,8 @@ import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import GroupIcon from '@material-ui/icons/Group';
 import AddPatient from './AddPatient';
-import {Link} from 'react-router-dom'
 import Linker from 'component/common-components/Linker';
-
-const drawerWidth = 240;
-const useStyles = makeStyles(theme => ({
-    root: {
-      display: 'flex',
-    },
-    appBar: {
-      transition: theme.transitions.create(['margin', 'width'], {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-      }),
-    },
-    appBarShift: {
-      width: `calc(100% - ${drawerWidth}px)`,
-      marginLeft: drawerWidth,
-      transition: theme.transitions.create(['margin', 'width'], {
-        easing: theme.transitions.easing.easeOut,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-    },
-    menuButton: {
-      marginRight: theme.spacing(2),
-    },
-    hide: {
-      display: 'none',
-    },
-    drawer: {
-      width: drawerWidth,
-      flexShrink: 0,
-      position: "absolute"
-    },
-    drawerPaper: {
-      width: drawerWidth,
-    },
-    drawerHeader: {
-      display: 'flex',
-      alignItems: 'center',
-      padding: theme.spacing(0, 1),
-      ...theme.mixins.toolbar,
-      justifyContent: 'flex-end',
-    },
-    content: {
-      flexGrow: 1,
-      padding: theme.spacing(3),
-      transition: theme.transitions.create('margin', {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-      }),
-      marginLeft: -drawerWidth,
-    },
-    contentShift: {
-      transition: theme.transitions.create('margin', {
-        easing: theme.transitions.easing.easeOut,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-      marginLeft: 0,
-    },
-  }));
+import {DrawerStyles} from './DrawStyle'
 
 const dialogState = {'New Patient': false}
 function reducer(state, action){
@@ -89,7 +31,7 @@ function reducer(state, action){
 }
 
 export default ({handleDrawerClose, open}) => {
-    const classes = useStyles();   
+    const classes = DrawerStyles();   
     const theme = useTheme();
  
     const [show, dispatch] = React.useReducer(reducer, dialogState)
@@ -123,8 +65,8 @@ export default ({handleDrawerClose, open}) => {
                 <Divider />
                 <List>
                   {['Home','Patients'].map((text, index) => (
-                    <Linker route={text === 'Home'?'/home': text === 'Patients'? '/patient':null}>
-                    <ListItem button key={index}>
+                    <Linker route={text === 'Home'?'/home': text === 'Patients'? '/patient':null} key={index}>
+                    <ListItem button >
                       <ListItemIcon>{index % 2 === 0 ? <DashboardIcon /> : <GroupIcon />}</ListItemIcon>
                       <ListItemText primary={text} />
                     </ListItem>
