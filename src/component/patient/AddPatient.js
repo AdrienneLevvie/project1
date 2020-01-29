@@ -1,5 +1,5 @@
 import React from 'react'
-import Modal from '../../common-components/Modal'
+import Modal from '../common-components/Modal'
 //import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import { TextField, Container, makeStyles } from '@material-ui/core';

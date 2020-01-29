@@ -14,7 +14,7 @@ import { Typography } from '@material-ui/core';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import GroupIcon from '@material-ui/icons/Group';
-import AddPatient from './AddPatient';
+import AddPatient from '../../patient/AddPatient';
 import Linker from 'component/common-components/Linker';
 import {DrawerStyles} from './DrawStyle'
 

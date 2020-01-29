@@ -37,15 +37,12 @@ export default withRouter((props) => {
     const { enqueueSnackbar } = useSnackbar();
     const [state, dispatch] = React.useReducer(navBarReducer, {anchorEl:null})
     const open = Boolean(state.anchorEl);
-
     const handleLogout = async() => {
         const result = await auth.logout()
         enqueueSnackbar(result.msg, {...result, autoHideDuration: 3000})
         props.history.push('/')
     }
-
     const drawerOpen = SidebarController.state
-
     const handleDrawerOpen = () => {
         SidebarController.option({type: 'OPEN'})
     };
