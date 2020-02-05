@@ -1,11 +1,14 @@
 import React from 'react';
 import 'App.css';
 import PageRouter from 'Router'
+import ContextProvider from 'context/ContextProvider';
 
 function App() {
   return (
     <div className="App">
-      <PageRouter />
+      <ContextProvider>
+        <PageRouter />
+      </ContextProvider>
     </div>
   );
 }

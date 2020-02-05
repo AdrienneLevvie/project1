@@ -8,6 +8,11 @@ import { createStore } from 'redux'
 import rootReducer from './redx/reducers'
 import { Provider } from 'react-redux'
 import { BrowserRouter as Route } from 'react-router-dom'
+// import dotenv from 'dotenv'
+
+// dotenv.config()
+
+require('dotenv').config()
 
 let store = createStore(
     rootReducer,

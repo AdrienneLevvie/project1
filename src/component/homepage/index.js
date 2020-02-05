@@ -1,7 +1,10 @@
 import React from 'react'
-import NavBar from '../header'
+import PageLayout from '../common-components/Layout'
 export default function HomePage(){
+
     return (
-        <NavBar/>
+      <PageLayout>
+          <h1>Homepage</h1>
+      </PageLayout>
     )
 }
