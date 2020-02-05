@@ -2,13 +2,9 @@ import Axios from "axios"
 
 import * as ls from 'local-storage'
 class api {
-    constructor(){
-        this.baseURL = 'http://localhost:3000'
-    }
-
     async loginController(loginData, endpoint){
         try {
-            const response = await Axios.post(`${this.baseURL}/${endpoint}`,{
+            const response = await Axios.post(`/${endpoint}`,{
                 email: loginData.email,
                 password: loginData.password
             })
@@ -24,7 +20,6 @@ class api {
                 notif: {msg: 'Invalid username and password',   
                 variant: 'error'}
             }
-
             return data
         }
     }
@@ -48,9 +43,11 @@ class auth {
         this.curr_user = result
         if (!result.err){    
             ls.set('isAuth', true) 
+            ls.set('user', JSON.stringify(this.curr_user))
+            return this.curr_user
         }
-        ls.set('user', JSON.stringify(this.curr_user))
         return this.curr_user
+        
     }
 
     logout(){
