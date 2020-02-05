@@ -49,8 +49,8 @@ export default ({ handleDrawerClose, open }) => {
   return (
     <Drawer
       className={classes.drawer}
-      variant="persistent"
       anchor="left"
+      variant="persistent"
       open={open}
       classes={{
         paper: classes.drawerPaper

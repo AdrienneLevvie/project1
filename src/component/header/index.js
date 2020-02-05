@@ -9,6 +9,7 @@ import auth from "controllers/login/auth";
 import { DrawerComponent } from "./sidebar /Sidebar";
 import { SidebarContext } from "context/SidebarContext";
 import clsx from "clsx";
+import { DrawerStyles } from "./sidebar /DrawStyle";
 
 const useStyle = makeStyles(themee => ({
   root: {
@@ -32,7 +33,7 @@ function navBarReducer(state, { action, anchor }) {
 }
 
 export default withRouter(props => {
-  const classes = useStyle();
+  const classes = DrawerStyles();
   const { enqueueSnackbar } = useSnackbar();
 
   const SidebarController = React.useContext(SidebarContext);
@@ -55,56 +56,57 @@ export default withRouter(props => {
   };
 
   return (
-    <React.Fragment>
-      <AppBar
-        position="fixed"
-        className={clsx(classes.appBar, {
-          [classes.appBarShift]: drawerOpen
-        })}
-      >
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            edge="start"
-            aria-label="menu"
-            onClick={handleDrawerOpen}
-            className={clsx(classes.menuButton, drawerOpen && classes.hide)}
-          >
-            <MenuIcon />
-          </IconButton>
-          <IconButton
-            aria-label="account of current user"
-            aria-controls="menu-appbar"
-            onClick={e =>
-              dispatch({ action: "handleMenu", anchor: e.currentTarget })
-            }
-            color="inherit"
-          >
-            <AccountCircle />
-          </IconButton>
-          <Menu
-            anchorEl={state.anchorEl}
-            anchorOrigin={{
-              vertical: "top",
-              horizontal: "right"
-            }}
-            keepMounted
-            transformOrigin={{
-              vertical: "top",
-              horizontal: "right"
-            }}
-            open={open}
-            onClose={() => dispatch({ action: "handleClose" })}
-          >
-            <MenuItem>View Profile</MenuItem>
-            <MenuItem onClick={handleLogout}>Logout</MenuItem>
-          </Menu>
-        </Toolbar>
-      </AppBar>
+    <AppBar
+      position="fixed"
+      className={clsx(classes.appBar, {
+        [classes.appBarShift]: drawerOpen
+      })}
+    >
+      <Toolbar style={{ display: "flex", justifyContent: "space-between" }}>
+        <IconButton
+          color="inherit"
+          edge="start"
+          aria-label="menu"
+          onClick={handleDrawerOpen}
+          className={clsx(
+            classes.menuButton,
+            SidebarController.state && classes.hide
+          )}
+        >
+          <MenuIcon />
+        </IconButton>
+        <IconButton
+          aria-label="account of current user"
+          aria-controls="menu-appbar"
+          onClick={e =>
+            dispatch({ action: "handleMenu", anchor: e.currentTarget })
+          }
+          color="inherit"
+        >
+          <AccountCircle />
+        </IconButton>
+        <Menu
+          anchorEl={state.anchorEl}
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "right"
+          }}
+          keepMounted
+          transformOrigin={{
+            vertical: "top",
+            horizontal: "right"
+          }}
+          open={open}
+          onClose={() => dispatch({ action: "handleClose" })}
+        >
+          <MenuItem>View Profile</MenuItem>
+          <MenuItem onClick={handleLogout}>Logout</MenuItem>
+        </Menu>
+      </Toolbar>
       <DrawerComponent
         handleDrawerClose={handleDrawerClose}
         open={drawerOpen}
       />
-    </React.Fragment>
+    </AppBar>
   );
 });
