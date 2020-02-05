@@ -9,6 +9,7 @@ export const DrawerStyles = makeStyles(theme => ({
     border: "1px solid black"
   },
   appBar: {
+    backgroundColor: '#3257a8',
     transition: theme.transitions.create(["margin", "width"], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen
