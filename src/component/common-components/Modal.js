@@ -12,7 +12,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 const useStyles = makeStyles(theme => ({
     appBar: {
       position: 'relative',
-      backgroundColor: 'rgba(28,118,210,1)'
+      backgroundColor: '#3257a8',
     },
     title: {
       marginLeft: theme.spacing(2),
