@@ -1,56 +1,26 @@
 import React from "react";
 import Modal from "../common-components/Modal";
-//import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from "@material-ui/core/DialogContent";
-import { TextField, Container, makeStyles } from "@material-ui/core";
-import { FIELDS as data} from './controller/TextFieldCtrllr'
-import PropTypes from "prop-types";
-
-const useStyle = makeStyles(theme => ({
-  InputField: {
-    margin: theme.spacing(1)
-  }
-}));
-
-const InputField = props => {
-  const classes = useStyle();
-  return (
-    <div>
-      {props.fields.map(group => (
-        <div key={group} style={{ display: "flex" }}>
-          {group.map(name => (
-            <TextField
-              key={name}
-              className={classes.InputField}
-              autoFocus
-              margin="dense"
-              label={name}
-              InputLabelProps={{
-                shrink: true
-              }}
-              type={name === "Birthday" ? "date" : "text"}
-              fullWidth
-              variant="outlined"
-            />
-          ))}
-        </div>
-      ))}
-    </div>
-  );
-};
-InputField.propTypes = {
-  fields: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string))
-};
+import {Container, Paper, Card, Typography, Avatar } from "@material-ui/core";
+import { FIELDS as personal, FIELDS2 as family } from './controller/TextFieldCtrllr'
+import InputField from './Textfield'
+import ImageUploader from 'react-images-upload';
 
 export default props => {
   const { isOpen, title, handleClose } = props;
   return (
     <Modal title={title} open={isOpen} handleClose={handleClose}>
-      <DialogContent>
-        <Container>
-          <h1>Image Here</h1>
-        </Container>
-        <InputField fields={data} />
+      <DialogContent style={{display: 'flex'}}>
+        <Paper variant="outlined" elevation={1} style={{width: '100%', padding: '5px', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+          <Avatar style={{width: '150px', height: '150px'}}/>
+          <ImageUploader withIcon={true}
+                buttonText='Choose images'
+                imgExtension={['.jpg', '.gif', '.png', '.gif']}
+                maxFileSize={5242880}
+                label="Max Size: 5mb"
+            />
+          <InputField fields={personal} title="Personal Information" />
+        </Paper>
       </DialogContent>
     </Modal>
   );

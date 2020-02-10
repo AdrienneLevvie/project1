@@ -1,14 +1,8 @@
 import React from 'react'
-import DialogContent from "@material-ui/core/DialogContent";
-import { TextField, FormLabel, makeStyles, FormControlLabel, FormControl, RadioGroup, Radio } from "@material-ui/core";
-//import DialogContentText from '@material-ui/core/DialogContentText';
-import PropTypes from "prop-types";
+import { TextField, FormLabel, makeStyles, FormControlLabel, RadioGroup, Radio, Box, Typography } from "@material-ui/core";
 import clsx from 'clsx'
-import { red } from '@material-ui/core/colors';
-
-export default {
-    title: 'Fields'
-}
+import { FIELDS as data,  Reducer} from './controller/TextFieldCtrllr'
+import PropTypes from "prop-types";
 
 const useStyle = makeStyles(theme => ({
   InputField: {
@@ -27,40 +21,17 @@ const useStyle = makeStyles(theme => ({
 }));
 
 
-
-const FIELDS = [
-  ["Patient's Name", "Gender"],
-  ["Birthday","Age","Height", "Weight"],
-  ["House No.", "Street", "City"],
-  ["Mother's Name", "Mother's Occupation"],
-  ["Father's Name", "Father's Occupation"]
-];
-
-function Reducer(state, action){
-    switch(action.type){
-        case 'INPUT':
-            return action.data !== ''? (state = {...state, [action.label]:false}):(
-            state = {...state, [action.label]:true})
-        default:
-            return state
-    
-        }
-}
-
 const InputField = props => {
-  const classes = useStyle();
-  const [state, DISPATCH] = React.useReducer(Reducer, [])
-  const [selectedValue, setSelectedValue] = React.useState('a');
+    const classes = useStyle();
+    const [state, DISPATCH] = React.useReducer(Reducer, [])
+     
 
-  const handleChange = event => {
-    setSelectedValue(event.target.value);
-  };
-  React.useEffect(() => console.log(state), [state])
+    return (
 
-  return (
-    <div>
+      <div style={{padding: '15px', margin: '15px', width: '100%'}}>
+        <Typography variant="h5">{props.title}:</Typography>
       {props.fields.map(group => (
-        <div key={group} style={{ display: "flex" }}>
+        <div key={group} style={{ display: "flex"}}>
           {group.map(name => name !== 'Gender'?(
             <TextField
               key={name}
@@ -88,11 +59,11 @@ const InputField = props => {
           <React.Fragment>
             <RadioGroup>
             <FormLabel style={{fontSize: '13px', marginLeft: '21px'}}>{name}</FormLabel>
-              <div className={classes.short} style={{display: 'flex', marginLeft: '8px'}}>
-              <FormControlLabel value="female" control={<Radio color="primary"  />} label="Female" />
+              <Box className={classes.short} style={{display: 'flex', marginLeft: '8px'}}>
               <FormControlLabel value="male" control={<Radio color="primary"  />} label="Male" />
+              <FormControlLabel value="female" control={<Radio color="primary"  />} label="Female" />
               <FormControlLabel value="others" control={<Radio color="primary" />} label="Others" />
-              </div>
+              </Box>
             </RadioGroup>
           </React.Fragment>
           )
@@ -100,12 +71,9 @@ const InputField = props => {
         </div>
       ))}
     </div>
-  );
-};
-InputField.propTypes = {
-  fields: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string))
-};
-
-export const SampleFields = () => {
-    return <InputField fields={FIELDS} />
+    )
 }
+  InputField.propTypes = {
+    fields: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string))
+  };
+  export default InputField
