@@ -2,7 +2,7 @@ import React from "react";
 import { AppBar, IconButton, Toolbar, Menu, MenuItem } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import AccountCircle from "@material-ui/icons/AccountCircle";
-import { makeStyles } from "@material-ui/core/styles";
+
 import { useSnackbar } from "notistack";
 import { withRouter } from "react-router-dom";
 import auth from "controllers/login/auth";
@@ -11,15 +11,6 @@ import { SidebarContext } from "context/SidebarContext";
 import clsx from "clsx";
 import { DrawerStyles } from "./sidebar /DrawStyle";
 
-const useStyle = makeStyles(themee => ({
-  root: {
-    flexGrow: 1,
-    backgroundColor: "rgba(27, 118, 210, 1)"
-  },
-  title: {
-    flexGrow: 1
-  }
-}));
 
 function navBarReducer(state, { action, anchor }) {
   switch (action) {

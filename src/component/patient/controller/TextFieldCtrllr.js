@@ -1,14 +1,12 @@
 export const FIELDS = [
   ["Patient's Name", "Gender"],
-  ["Birthday","Age","Height", "Weight"],
+  ["Birthday", "Age", "Height", "Weight"],
   ["House No.", "Street", "City"],
   ["Mother's Name", "Mother's Occupation"],
   ["Father's Name", "Father's Occupation"]
 ];
 
-export const FIELDS2 = [
-  ["Blood Type"]
-]
+export const FIELDS2 = [["Blood Type"]];
 export function Reducer(state, action) {
   switch (action.type) {
     case "INPUT":

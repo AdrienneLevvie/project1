@@ -12,3 +12,4 @@ const current_user = (state = [], action) => {
 }
 
 export default current_user
+

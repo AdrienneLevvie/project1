@@ -21,7 +21,7 @@ const useStyles = makeStyles(theme => ({
   }));
 
 export default (props) => {
-    const {open, handleClose, title} = props
+    const {open, handleClose, title, handleSubmit} = props
     const classes = useStyles()
     return (
         <Dialog fullScreen open={open} onClose={handleClose} aria-labelledby="form-dialog-title" TransitionComponent={Transition}>
@@ -33,7 +33,7 @@ export default (props) => {
                 <Typography variant="h6" className={classes.title}>
                 {title}
                 </Typography>
-                <Button autoFocus color="inherit" onClick={handleClose}>
+                <Button autoFocus color="inherit" onClick={handleSubmit}>
                 save
                 </Button>
             </Toolbar>
